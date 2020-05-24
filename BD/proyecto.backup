@@ -1,0 +1,308 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
+
+-- Started on 2020-05-23 20:21:00
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 7 (class 2615 OID 16446)
+-- Name: proyecto; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA proyecto;
+
+
+ALTER SCHEMA proyecto OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 203 (class 1259 OID 16447)
+-- Name: cliente; Type: TABLE; Schema: proyecto; Owner: postgres
+--
+
+CREATE TABLE proyecto.cliente (
+    id_cliente integer NOT NULL,
+    nombre text,
+    telefono integer,
+    email text,
+    direccion text,
+    fecha_creacion timestamp with time zone
+);
+
+
+ALTER TABLE proyecto.cliente OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16453)
+-- Name: estilo; Type: TABLE; Schema: proyecto; Owner: postgres
+--
+
+CREATE TABLE proyecto.estilo (
+    id_estilo integer NOT NULL,
+    nombre text,
+    descripcion text
+);
+
+
+ALTER TABLE proyecto.estilo OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16459)
+-- Name: exposicion; Type: TABLE; Schema: proyecto; Owner: postgres
+--
+
+CREATE TABLE proyecto.exposicion (
+    id_exposicion integer NOT NULL,
+    titulo text,
+    descripcion text,
+    fecha_creacion timestamp with time zone
+);
+
+
+ALTER TABLE proyecto.exposicion OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 16465)
+-- Name: obra; Type: TABLE; Schema: proyecto; Owner: postgres
+--
+
+CREATE TABLE proyecto.obra (
+    id_obra integer NOT NULL,
+    titulo text,
+    descripcion text,
+    precio numeric,
+    fecha_creacion timestamp with time zone,
+    id_cliente integer,
+    id_estilo integer
+);
+
+
+ALTER TABLE proyecto.obra OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16471)
+-- Name: obra_exposicion; Type: TABLE; Schema: proyecto; Owner: postgres
+--
+
+CREATE TABLE proyecto.obra_exposicion (
+    id_obra_exposicion integer NOT NULL,
+    id_obra integer,
+    id_exposicion integer
+);
+
+
+ALTER TABLE proyecto.obra_exposicion OWNER TO postgres;
+
+--
+-- TOC entry 2850 (class 0 OID 16447)
+-- Dependencies: 203
+-- Data for Name: cliente; Type: TABLE DATA; Schema: proyecto; Owner: postgres
+--
+
+COPY proyecto.cliente (id_cliente, nombre, telefono, email, direccion, fecha_creacion) FROM stdin;
+1	Flavia Salazar	72599845	flavia@gmail.com	Av,Vasquez	2018-01-06 01:00:00-03
+2	Narda Orihuela	72566984	narda@gmail.com	Obrajes	2020-01-05 01:00:00-03
+3	Diego Lafaye	76598456	diego@gmail.com	Los Pinos	2019-02-06 01:00:00-03
+4	Micaela Torres	73085128	micaela@gmail.com	Sopocachi	2018-03-12 01:00:00-03
+6	Ruben Ovalle	73078965	ruben@gmail.com	Av. Arce	2019-05-05 01:00:00-03
+7	Gabriela Mercado	72536659	gabriela@gmail.com	San Pedro	2019-02-28 01:00:00-03
+5	\N	0	\N	\N	1996-09-10 01:00:00-03
+\.
+
+
+--
+-- TOC entry 2851 (class 0 OID 16453)
+-- Dependencies: 204
+-- Data for Name: estilo; Type: TABLE DATA; Schema: proyecto; Owner: postgres
+--
+
+COPY proyecto.estilo (id_estilo, nombre, descripcion) FROM stdin;
+1	Realismo	El realismo busca representar la vida de la forma más fiel. Para eso los pintores realistas usan hábilmente la pintura, el color y el tono. Mucha gente considera esta pintura como el “verdadero arte”.
+2	Hiperrealismo	 Se busca que la realidad sea con mayor fidelidad que la fotografía. La pintura hiperrealistas suele hacerse a partir de una fotografía.
+3	Impresionismo	 El impresionismo se fija más en las formas que en los detalles. Por eso muestra sus preferencias por las pinturas de paisajes (de hecho los impresionistas prefieren pintar al aire libre) y le dan especial importancia a la luz.
+4	Expresionismo	 Se llama expresionismo porque busca reflejar la expresión de los sentimientos y emociones más que la realidad.
+5	Arte abstracto	El arte abstracto se refiere a un estilo de pintura que no utiliza la realidad figurativa como referencia. Se usan colores y formas se utilizan para retratar las emociones y el paisaje del mundo interior de una persona.
+\.
+
+
+--
+-- TOC entry 2852 (class 0 OID 16459)
+-- Dependencies: 205
+-- Data for Name: exposicion; Type: TABLE DATA; Schema: proyecto; Owner: postgres
+--
+
+COPY proyecto.exposicion (id_exposicion, titulo, descripcion, fecha_creacion) FROM stdin;
+2	Nuevo siglo	Cuadros de la última generación	1996-09-10 01:00:00-03
+3	Antiguos	Cuadros antiguos	1996-09-10 01:00:00-03
+4	Mujeres	Cuadros sobre mujeres	1996-09-10 01:00:00-03
+5	Leonardo Da Vinci	Cuadros de Leonardo Da Vinci	1996-09-10 01:00:00-03
+1	Cuadros Siglo XX	Cuadros del siglo XX	1997-09-10 01:00:00-03
+\.
+
+
+--
+-- TOC entry 2853 (class 0 OID 16465)
+-- Dependencies: 206
+-- Data for Name: obra; Type: TABLE DATA; Schema: proyecto; Owner: postgres
+--
+
+COPY proyecto.obra (id_obra, titulo, descripcion, precio, fecha_creacion, id_cliente, id_estilo) FROM stdin;
+1	Romeo y Julieta	20x15 cm	1500	1996-09-10 01:00:00-03	1	1
+2	Mona Lisa	50x95 cm	2600	1996-09-10 01:00:00-03	2	4
+3	La Noche Estrellada	70x90 cm	2800	1996-09-10 01:00:00-03	3	2
+4	El Grito	85x100 cm	500	1996-09-10 01:00:00-03	4	1
+5	Capilla Sixtina	88x100 cm	9000.5	1996-09-10 01:00:00-03	5	2
+\.
+
+
+--
+-- TOC entry 2854 (class 0 OID 16471)
+-- Dependencies: 207
+-- Data for Name: obra_exposicion; Type: TABLE DATA; Schema: proyecto; Owner: postgres
+--
+
+COPY proyecto.obra_exposicion (id_obra_exposicion, id_obra, id_exposicion) FROM stdin;
+1	1	2
+2	2	1
+3	3	1
+4	4	1
+5	5	1
+\.
+
+
+--
+-- TOC entry 2707 (class 2606 OID 16475)
+-- Name: cliente id_cliente; Type: CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.cliente
+    ADD CONSTRAINT id_cliente PRIMARY KEY (id_cliente);
+
+
+--
+-- TOC entry 2709 (class 2606 OID 16477)
+-- Name: estilo id_estilo; Type: CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.estilo
+    ADD CONSTRAINT id_estilo PRIMARY KEY (id_estilo);
+
+
+--
+-- TOC entry 2711 (class 2606 OID 16479)
+-- Name: exposicion id_exposicion; Type: CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.exposicion
+    ADD CONSTRAINT id_exposicion PRIMARY KEY (id_exposicion);
+
+
+--
+-- TOC entry 2715 (class 2606 OID 16481)
+-- Name: obra id_obra; Type: CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.obra
+    ADD CONSTRAINT id_obra PRIMARY KEY (id_obra);
+
+
+--
+-- TOC entry 2719 (class 2606 OID 16483)
+-- Name: obra_exposicion id_obra_expocision; Type: CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.obra_exposicion
+    ADD CONSTRAINT id_obra_expocision PRIMARY KEY (id_obra_exposicion);
+
+
+--
+-- TOC entry 2712 (class 1259 OID 16484)
+-- Name: fki_id_cliente; Type: INDEX; Schema: proyecto; Owner: postgres
+--
+
+CREATE INDEX fki_id_cliente ON proyecto.obra USING btree (id_cliente);
+
+
+--
+-- TOC entry 2713 (class 1259 OID 16485)
+-- Name: fki_id_estilo; Type: INDEX; Schema: proyecto; Owner: postgres
+--
+
+CREATE INDEX fki_id_estilo ON proyecto.obra USING btree (id_estilo);
+
+
+--
+-- TOC entry 2716 (class 1259 OID 16486)
+-- Name: fki_id_expocision; Type: INDEX; Schema: proyecto; Owner: postgres
+--
+
+CREATE INDEX fki_id_expocision ON proyecto.obra_exposicion USING btree (id_exposicion);
+
+
+--
+-- TOC entry 2717 (class 1259 OID 16487)
+-- Name: fki_id_obra; Type: INDEX; Schema: proyecto; Owner: postgres
+--
+
+CREATE INDEX fki_id_obra ON proyecto.obra_exposicion USING btree (id_obra);
+
+
+--
+-- TOC entry 2720 (class 2606 OID 16488)
+-- Name: obra id_cliente; Type: FK CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.obra
+    ADD CONSTRAINT id_cliente FOREIGN KEY (id_cliente) REFERENCES proyecto.cliente(id_cliente);
+
+
+--
+-- TOC entry 2721 (class 2606 OID 16493)
+-- Name: obra id_estilo; Type: FK CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.obra
+    ADD CONSTRAINT id_estilo FOREIGN KEY (id_estilo) REFERENCES proyecto.estilo(id_estilo);
+
+
+--
+-- TOC entry 2722 (class 2606 OID 16498)
+-- Name: obra_exposicion id_expocision; Type: FK CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.obra_exposicion
+    ADD CONSTRAINT id_expocision FOREIGN KEY (id_exposicion) REFERENCES proyecto.exposicion(id_exposicion);
+
+
+--
+-- TOC entry 2723 (class 2606 OID 16503)
+-- Name: obra_exposicion id_obra; Type: FK CONSTRAINT; Schema: proyecto; Owner: postgres
+--
+
+ALTER TABLE ONLY proyecto.obra_exposicion
+    ADD CONSTRAINT id_obra FOREIGN KEY (id_obra) REFERENCES proyecto.obra(id_obra);
+
+
+-- Completed on 2020-05-23 20:21:01
+
+--
+-- PostgreSQL database dump complete
+--
+
